@@ -13,6 +13,8 @@ import {
   Stats,
 } from "./pages";
 
+import { loader as dashboardLoader } from "./pages/DashboardLayout.jsx";
+import { action as loginAction } from "./pages/Login.jsx";
 import { action as registerAction } from "./pages/Register.jsx";
 
 export const checkDefaultTheme = () => {
@@ -40,10 +42,12 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+        action: loginAction,
       },
       {
         path: "dashboard",
         element: <DashboardLayout />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,
