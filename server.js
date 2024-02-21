@@ -10,6 +10,7 @@ dotenv.config();
 // routers
 import authRouter from "./routes/authRouter.js";
 import jobRouter from "./routes/jobRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 // middlewares
 import { authenticateUser } from "./middlewares/authMiddleware.js";
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 app.get("/", (req, res) => res.send("hello world"));
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
+app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.use("*", (req, res) => {
