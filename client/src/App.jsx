@@ -4,6 +4,7 @@ import {
   Admin,
   AllJobs,
   DashboardLayout,
+  EditJob,
   Error,
   HomeLayout,
   Landing,
@@ -16,6 +17,11 @@ import {
 import { action as addJobAction } from "./pages/AddJob.jsx";
 import { loader as allJobsLoader } from "./pages/AllJobs.jsx";
 import { loader as dashboardLoader } from "./pages/DashboardLayout.jsx";
+import { action as deleteJobAction } from "./pages/DeleteJob.jsx";
+import {
+  action as editJobAction,
+  loader as editJobLoader,
+} from "./pages/EditJob.jsx";
 import { action as loginAction } from "./pages/Login.jsx";
 import { action as registerAction } from "./pages/Register.jsx";
 
@@ -72,6 +78,16 @@ const router = createBrowserRouter([
           {
             path: "admin",
             element: <Admin />,
+          },
+          {
+            path: "edit-job/:id",
+            element: <EditJob />,
+            loader: editJobLoader,
+            action: editJobAction,
+          },
+          {
+            path: "delete-job/:id",
+            action: deleteJobAction,
           },
         ],
       },
