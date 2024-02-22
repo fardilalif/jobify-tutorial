@@ -12,6 +12,10 @@ import authRouter from "./routes/authRouter.js";
 import jobRouter from "./routes/jobRouter.js";
 import userRouter from "./routes/userRouter.js";
 
+// public
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+
 // middlewares
 import { authenticateUser } from "./middlewares/authMiddleware.js";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
@@ -19,6 +23,8 @@ import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, "./public")));
 app.use(express.json());
 app.use(cookieParser());
 
