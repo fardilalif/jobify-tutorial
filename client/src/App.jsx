@@ -24,6 +24,7 @@ import {
   loader as editJobLoader,
 } from "./pages/EditJob.jsx";
 import { action as loginAction } from "./pages/Login.jsx";
+import { action as profileAction } from "./pages/Profile.jsx";
 import { action as registerAction } from "./pages/Register.jsx";
 
 export const checkDefaultTheme = () => {
@@ -75,6 +76,7 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+            action: profileAction,
           },
           {
             path: "admin",
