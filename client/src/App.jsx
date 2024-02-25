@@ -26,6 +26,7 @@ import {
 import { action as loginAction } from "./pages/Login.jsx";
 import { action as profileAction } from "./pages/Profile.jsx";
 import { action as registerAction } from "./pages/Register.jsx";
+import { loader as statsLoader } from "./pages/Stats.jsx";
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("darkTheme") === "true";
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
           {
             path: "stats",
             element: <Stats />,
+            loader: statsLoader,
           },
           {
             path: "all-jobs",
