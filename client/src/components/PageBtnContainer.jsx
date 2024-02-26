@@ -19,6 +19,84 @@ const PageBtnContainer = () => {
     navigate(`${pathname}?${searchParams.toString()}`);
   };
 
+  const addPageButton = ({ page, activeClass }) => {
+    return (
+      <button
+        key={page}
+        className={`btn page-btn ${activeClass && "active"}`}
+        onClick={() => handlePageChange(page)}
+      >
+        {page}
+      </button>
+    );
+  };
+
+  const renderPageButtons = () => {
+    const pageButtons = [];
+
+    // first page
+    pageButtons.push(
+      addPageButton({ page: 1, activeClass: currentPage === 1 })
+    );
+
+    // dots
+    if (currentPage > 3) {
+      pageButtons.push(
+        <span className="page-btn dots" key="dots-1">
+          ...
+        </span>
+      );
+    }
+
+    // one before current
+    if (currentPage !== 1 && currentPage !== 2) {
+      pageButtons.push(
+        addPageButton({
+          page: currentPage - 1,
+          activeClass: false,
+        })
+      );
+    }
+
+    // current page
+    if (currentPage !== 1 && currentPage !== totalPages) {
+      pageButtons.push(
+        addPageButton({
+          page: currentPage,
+          activeClass: true,
+        })
+      );
+    }
+
+    // once after current
+    if (currentPage !== totalPages && currentPage !== totalPages - 1) {
+      pageButtons.push(
+        addPageButton({
+          page: currentPage + 1,
+          activeClass: false,
+        })
+      );
+    }
+
+    // dots
+    if (currentPage < totalPages - 2) {
+      pageButtons.push(
+        <span className="page-btn dots" key="dots-2">
+          ...
+        </span>
+      );
+    }
+
+    // last page
+    pageButtons.push(
+      addPageButton({
+        page: totalPages,
+        activeClass: currentPage === totalPages,
+      })
+    );
+    return pageButtons;
+  };
+
   return (
     <Wrapper>
       <button
@@ -31,19 +109,7 @@ const PageBtnContainer = () => {
       >
         <HiChevronDoubleLeft /> prev
       </button>
-      <div className="btn-container">
-        {pages.map((page) => {
-          return (
-            <button
-              key={page}
-              className={`btn page-btn ${page == currentPage && "active"}`}
-              onClick={() => handlePageChange(page)}
-            >
-              {page}
-            </button>
-          );
-        })}
-      </div>
+      <div className="btn-container">{renderPageButtons()}</div>
       <button
         className="btn next-btn"
         onClick={() => {

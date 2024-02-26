@@ -5,11 +5,10 @@ import { useAllJobsContext } from "../pages/AllJobs.jsx";
 import Wrapper from "./../assets/wrappers/DashboardFormPage";
 
 const SearchContainer = () => {
-  const {
-    searchValues: { search, jobStatus, jobType, sort },
-  } = useAllJobsContext();
-  const submit = useSubmit();
+  const { searchValues } = useAllJobsContext();
 
+  const { search, jobStatus, jobType, sort } = searchValues;
+  const submit = useSubmit();
   const debounce = (onChange) => {
     let timeout;
     return (e) => {
