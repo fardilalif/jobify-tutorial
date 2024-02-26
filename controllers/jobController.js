@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import Job from "../models/JobModel.js";
 
 export const getAllJobs = async (req, res) => {
-  const { search, jobStatus, jobType } = req.query;
+  const { search, jobStatus, jobType, sort } = req.query;
 
   const queryObject = {
     createdBy: req.user.userId,
@@ -24,8 +24,28 @@ export const getAllJobs = async (req, res) => {
     queryObject.jobType = jobType;
   }
 
-  const jobs = await Job.find(queryObject);
-  res.status(StatusCodes.OK).json({ jobs });
+  const sortOptions = {
+    newest: "-createdAt",
+    oldest: "createdAt",
+    "a-z": "position",
+    "z-a": "-position",
+  };
+  const sortKey = sortOptions[sort] || sortOptions.newest;
+
+  // pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const jobs = await Job.find(queryObject)
+    .sort(sortKey)
+    .skip(skip)
+    .limit(limit);
+  const totalJobs = await Job.countDocuments(queryObject);
+  const totalPages = Math.ceil(totalJobs / limit);
+  res
+    .status(StatusCodes.OK)
+    .json({ totalJobs, totalPages, currentPage: page, jobs });
 };
 
 export const createJob = async (req, res) => {
