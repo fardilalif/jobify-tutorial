@@ -1,5 +1,3 @@
-import React from "react";
-
 import { FaWpforms } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { IoBarChartSharp } from "react-icons/io5";
